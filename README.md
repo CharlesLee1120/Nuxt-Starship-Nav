@@ -56,9 +56,17 @@ pnpm build
 pnpm preview
 ```
 
-## 部署到Vercel
+## 部署到托管平台
+
+### 部署到 Vercel
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/CharlesLee1120/Nuxt-Starship-Nav)
+
+### 部署到 Cloudflare Pages
+
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/CharlesLee1120/Nuxt-Starship-Nav)
+
+
 
 ## 📝 数据管理
 
