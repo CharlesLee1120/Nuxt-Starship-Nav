@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+
   body {
     @apply bg-slate-50 text-slate-900 dark:bg-dark-bg dark:text-slate-100 antialiased;
   }
