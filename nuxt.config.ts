@@ -3,6 +3,9 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss', '@nuxt/icon'],
   app: {
     head: {
+      htmlAttrs: {
+        lang: 'zh-CN'
+      },
       title: 'Nuxt Starship Nav',
       meta: [
         { name: 'description', content: 'A beautiful, SEO-friendly navigation site built with Nuxt 4.' },
