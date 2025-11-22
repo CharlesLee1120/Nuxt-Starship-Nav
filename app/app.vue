@@ -9,5 +9,6 @@ import '~/assets/css/main.css'
       <NuxtPage />
     </main>
     <TheFooter />
+    <BackToTop />
   </div>
 </template>
