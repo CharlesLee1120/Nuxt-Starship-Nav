@@ -39,7 +39,7 @@ export const categories: Category[] = [
                 title: 'Midjourney',
                 url: 'https://www.midjourney.com',
                 desc: 'AI 图像生成工具',
-                icon: 'simple-icons:midjourney'
+                icon: 'logos:midjourney'
             },
             {
                 title: 'Claude',
