@@ -153,7 +153,7 @@ export const categories: Category[] = [
                 title: 'Heroicons',
                 url: 'https://heroicons.com',
                 desc: 'Tailwind CSS 官方图标',
-                icon: 'simple-icons:heroicons'
+                icon: 'simple-icons:iconify'
             }
         ]
     },
