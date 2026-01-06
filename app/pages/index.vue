@@ -2,11 +2,13 @@
 import { categories } from '~/data/sites'
 
 useSeoMeta({
-  title: 'Starship Nav - 星舰导航',
-  description: '一个简洁美观的导航站，收录常用工具、开发框架和设计资源。',
-  ogTitle: 'Starship Nav - 星舰导航',
-  ogDescription: '一个简洁美观的导航站，收录常用工具、开发框架和设计资源。',
+  title: 'Starship Nav - ',
+  description: '一个简洁美观的导航站,收录常用工具、开发框架和设计资源。',
+  ogTitle: 'Starship Nav - ',
+  ogDescription: '一个简洁美观的导航站,收录常用工具、开发框架和设计资源。',
 })
+
+const { sortSitesByPin } = usePinnedSites()
 
 /**
  * 搜索关键词状态
@@ -15,36 +17,45 @@ useSeoMeta({
 const searchQuery = ref('')
 
 /**
- * 根据搜索关键词过滤后的分类列表
- * Filtered categories based on search query
+ * 根据搜索关键词过滤后的分类列表,并将置顶站点排在前面
+ * Filtered categories based on search query with pinned sites first
  *
- * @returns {Array} 过滤后的分类列表
+ * @returns {Array} 过滤并排序后的分类列表
  */
 const filteredCategories = computed(() => {
-  if (!searchQuery.value) return categories
+  let result = categories
 
-  const query = searchQuery.value.toLowerCase()
-  return categories.map(category => {
-    // 过滤分类下的站点
-    const filteredSites = category.sites.filter(site =>
-      site.title.toLowerCase().includes(query) ||
-      site.desc.toLowerCase().includes(query) ||
-      site.url.toLowerCase().includes(query)
-    )
+  // 如果有搜索关键词,先进行过滤
+  if (searchQuery.value) {
+    const query = searchQuery.value.toLowerCase()
+    result = categories.map(category => {
+      // 过滤分类下的站点
+      const filteredSites = category.sites.filter(site =>
+        site.title.toLowerCase().includes(query) ||
+        site.desc.toLowerCase().includes(query) ||
+        site.url.toLowerCase().includes(query)
+      )
 
-    // 返回包含过滤后站点的新分类对象
-    return {
-      ...category,
-      sites: filteredSites
-    }
-  }).filter(category => category.sites.length > 0) // 只保留有匹配站点的分类
+      // 返回包含过滤后站点的新分类对象
+      return {
+        ...category,
+        sites: filteredSites
+      }
+    }).filter(category => category.sites.length > 0) // 只保留有匹配站点的分类
+  }
+
+  // 对每个分类的站点进行排序,置顶的站点排在前面
+  return result.map(category => ({
+    ...category,
+    sites: sortSitesByPin(category.sites)
+  }))
 })
 
 /**
  * 公告内容
  * Notice message
  */
-const noticeMessage = ref('欢迎访问 Starship Nav！这是一个示例公告，将在 1 分钟后自动关闭。')
+const noticeMessage = ref('欢迎访问 Starship Nav!这是一个示例公告,将在 1 分钟后自动关闭。')
 </script>
 
 <template>
