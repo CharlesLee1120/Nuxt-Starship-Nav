@@ -3,12 +3,12 @@ import { categories } from '~/data/sites'
 
 useSeoMeta({
   title: 'Starship Nav - ',
-  description: '一个简洁美观的导航站,收录常用工具、开发框架和设计资源。',
+  description: '一个简洁美观的导航站，收录常用工具、开发框架和设计资源。',
   ogTitle: 'Starship Nav - ',
-  ogDescription: '一个简洁美观的导航站,收录常用工具、开发框架和设计资源。',
+  ogDescription: '一个简洁美观的导航站，收录常用工具、开发框架和设计资源。',
 })
 
-const { sortSitesByPin } = usePinnedSites()
+const { pinnedSiteUrls, isPinned } = usePinnedSites()
 
 /**
  * 搜索关键词状态
@@ -23,6 +23,9 @@ const searchQuery = ref('')
  * @returns {Array} 过滤并排序后的分类列表
  */
 const filteredCategories = computed(() => {
+  // 访问 pinnedSiteUrls 以建立响应式依赖
+  const _ = pinnedSiteUrls.value
+
   let result = categories
 
   // 如果有搜索关键词,先进行过滤
@@ -47,7 +50,14 @@ const filteredCategories = computed(() => {
   // 对每个分类的站点进行排序,置顶的站点排在前面
   return result.map(category => ({
     ...category,
-    sites: sortSitesByPin(category.sites)
+    sites: [...category.sites].sort((a, b) => {
+      const aIsPinned = isPinned(a.url)
+      const bIsPinned = isPinned(b.url)
+
+      if (aIsPinned && !bIsPinned) return -1
+      if (!aIsPinned && bIsPinned) return 1
+      return 0
+    })
   }))
 })
 
@@ -55,7 +65,7 @@ const filteredCategories = computed(() => {
  * 公告内容
  * Notice message
  */
-const noticeMessage = ref('欢迎访问 Starship Nav!这是一个示例公告,将在 1 分钟后自动关闭。')
+const noticeMessage = ref('欢迎访问 Starship Nav！这是一个示例公告，将在 1 分钟后自动关闭。')
 </script>
 
 <template>
